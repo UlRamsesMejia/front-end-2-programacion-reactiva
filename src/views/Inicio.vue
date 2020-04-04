@@ -34,13 +34,25 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-    <div id="servicios" class="container mt-3">
-      <h2 class="text-center mb-3">Servicios</h2>
+    <div id="servicios" class="container mt-3 pb-3">
+      <h2 class="text-center mb-3">
+        Servicios
+        <font-awesome-icon icon="plus-circle" class="text-success cursor-pointer"
+          style="font-size: 1.5rem;" data-toggle="modal" data-target="#agregarServicio" />
+      </h2>
       <div class="row justify-content-center">
-        <div v-for="servicio in servicios" v-bind:key="servicio.id" class="col-12 col-md-6 col-lg-4">
+        <div v-for="(servicio, i) in servicios" v-bind:key="servicio.id"
+          class="col-12 col-md-6 col-lg-4 cursor-pointer" @click="detallesServicio = servicio">
           <div class="text-center">
-            <h3>{{ servicio.titulo }}</h3>
-            <p>{{ servicio.parrafo }}</p>
+            <div data-toggle="modal" data-target="#detallesServicio">
+              <h3>{{ servicio.titulo }}</h3>
+              <p>{{ servicio.parrafo }}</p>
+            </div>
+            <font-awesome-icon icon="edit" class="text-primary mx-2" 
+              style="font-size: 1.5rem;" data-toggle="modal" data-target="#agregarServicio"
+                @click="nuevoServicio = JSON.parse(JSON.stringify(servicio))"/>
+            <font-awesome-icon icon="times-circle" class="text-danger mx-2" 
+              style="font-size: 1.5rem;" @click="eliminarServicio(i)" />
           </div>
         </div>
       </div>
@@ -143,6 +155,52 @@
         </strong>
       </div>
     </div>
+
+    <!-- Modal Detalles del Servicio-->
+    <div class="modal fade" id="detallesServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h3 class="text-center">{{ detallesServicio.titulo }}</h3>
+            <p>{{ detallesServicio.parrafo }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Agregar Servicio-->
+    <div class="modal fade" id="agregarServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label>Titulo del Servicio</label>
+                <input type="text" class="form-control" v-model="nuevoServicio.titulo">
+              </div>
+              <div class="form-group">
+                <label>Descripción del Servicio</label>
+                <textarea class="form-control" v-model="nuevoServicio.parrafo"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" data-dismiss="modal" @click="agregarServicio">Agregar Servicio</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -168,7 +226,34 @@
             parrafo: 'Solicitud de Autorización por parte de las empresas importadoras de Gases Refrigerantes del tipo Hidrofluorocarbonos (HFC) e Hidroclorofluorocarbonos (HCFC), ante la Dirección General de Gestión de la Calidad Ambiental.',
           },
         ],
+        nuevoServicio: {
+          titulo: '',
+          parrafo: '',
+        },
+        detallesServicio: {},
       };
+    },
+    methods: {
+      agregarServicio() {
+        if (this.nuevoServicio.id) {
+          this.editarServicio();
+        } else {
+          this.nuevoServicio.id = this.servicios.length + 1;
+          this.servicios.push(this.nuevoServicio);
+          this.nuevoServicio = {};
+        }
+      },
+      editarServicio() {
+        this.servicios.forEach((s) => {
+          if (s.id == this.nuevoServicio.id) {
+            s.titulo = this.nuevoServicio.titulo;
+            s.parrafo = this.nuevoServicio.parrafo;
+          }
+        });
+      },
+      eliminarServicio(i) {
+        this.servicios.splice(i, 1)
+      },
     },
   }
 </script>
