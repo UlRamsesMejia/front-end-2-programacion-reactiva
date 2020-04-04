@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="text-center" style="margin-top: 4rem;">Noticias</h2>
+    <h2 class="text-center">Noticias</h2>
     <div class="row">
       <div v-for="(noticia, i) in noticias" v-bind:key="i" class="col-12 col-sm-2 col-md-4"
         data-toggle="modal" data-target="#detallesNoticia" @click="detallesNoticia = noticia">

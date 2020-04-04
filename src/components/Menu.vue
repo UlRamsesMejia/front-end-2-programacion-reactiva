@@ -1,7 +1,9 @@
 <template>
   <div>
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-success px-4 py-2">
-    <router-link class="navbar-brand" to="/">Ministerio del Poder Popular para el Ecosocialismo</router-link>
+    <nav class="navbar navbar-expand-md navbar-dark bg-success px-4 py-2">
+    <router-link class="navbar-brand text-center" to="/">
+      Ministerio del Poder <br class="d-lg-none" />Popular para el Ecosocialismo
+    </router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
