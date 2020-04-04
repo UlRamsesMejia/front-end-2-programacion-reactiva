@@ -151,7 +151,7 @@
       </div>
       <div>
         <strong>
-          Ulnaiver Ramses Mejia Cañizales
+          Ulneiver Ramses Mejia Cañizales
         </strong>
       </div>
     </div>
